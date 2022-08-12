@@ -173,6 +173,23 @@ blocks:
     coordinate: [576, 20.0]
     rotation: 0
     state: true
+- name: frame_rate
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: frame rate
+    short_id: r
+    type: intx
+    value: '30'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [672, 20.0]
+    rotation: 0
+    state: true
 - name: frequency
   id: parameter
   parameters:
@@ -187,7 +204,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [680, 20.0]
+    coordinate: [832, 20.0]
     rotation: 0
     state: true
 - name: gain
@@ -204,7 +221,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [784, 20.0]
+    coordinate: [936, 20.0]
     rotation: 0
     state: enabled
 - name: import_0
@@ -320,7 +337,7 @@ blocks:
     avg_alpha: '1.0'
     comment: ''
     fft_size: fft_size
-    frame_rate: '30'
+    frame_rate: frame_rate
     maxoutbuf: '0'
     minoutbuf: '0'
     ref_scale: '1'
@@ -716,7 +733,7 @@ blocks:
   parameters:
     alias: ''
     comment: "-\n \nCOMMAND LINE PARAMETERS\nWHEN WE USE PARAMETER BLOCKS\nTHE GENERATED\
-      \ PYTHON WILL\nNOW HAVE A --help/-h menu\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
+      \ PYTHON WILL\nNOW HAVE A --help/-h menu\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
     note: ''
   states:
     bus_sink: false
@@ -965,7 +982,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1072, 12.0]
+    coordinate: [1168, 12.0]
     rotation: 0
     state: true
 - name: note_1_1_0
@@ -1291,7 +1308,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [872, 20.0]
+    coordinate: [1024, 20.0]
     rotation: 0
     state: true
 - name: zeromq_pub_sink_0
@@ -1328,3 +1345,4 @@ connections:
 
 metadata:
   file_format: 1
+  grc_version: 3.10.2.0-rc1
