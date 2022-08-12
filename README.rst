@@ -1,7 +1,10 @@
 A Web-based spectrum display server for GNURadio
-
-The web application code is the original 'waterfall' program by jledet. The receiver portion has been 
+The web application code is the original 'waterfall' program by jledet. The receiver portion has been
 reworked to accept a stream of vectors from GNURadio
+Included Example Flowgraph:
+
+.. image:: img/example_flowgraph.png
+
 
 Original Waterfall Project:
 (https://github.com/jledet/waterfall)
@@ -33,7 +36,7 @@ USAGE
 run the zmq_server.py with the appropriate arguments. 
 output of zmq_server.py -h
 usage: zmq_server.py [-h] [-s SAMPLE_RATE] [-f FREQUENCY] [-n FFT_SIZE] [-r FRAME_RATE]
-
+``
 optional arguments:
   -h, --help            show this help message and exit
   -s SAMPLE_RATE, --sample-rate SAMPLE_RATE
@@ -41,7 +44,7 @@ optional arguments:
   -n FFT_SIZE, --fft-size FFT_SIZE
   -r FRAME_RATE, --frame-rate FRAME_RATE
 the server is hardcoded to receive data on zmq port 5001 and display spectrum on 0.0.0.0 port 8200
-
+``
 Open the RTLSDR_or_fake_signal_to_fft_to_zmq.grc' in GNURadio Companion and run the flowgraph
 -- or --
 Disable the fake signals and enable the RTLSDR block, then run the flowgraph

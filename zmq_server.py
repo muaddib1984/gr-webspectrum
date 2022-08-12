@@ -64,8 +64,8 @@ class fft_broadcast_sink(gr.sync_block):
 
     def work(self, input_items, output_items):
         ninput_items = len(input_items[0])
-
         for bins in input_items[0]:
+
             p = np.around(bins).astype(int)
 #            p = np.fft.fftshift(p)
             for c in connections.copy():
