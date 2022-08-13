@@ -65,17 +65,13 @@ class fft_broadcast_sink(gr.sync_block):
     def work(self, input_items, output_items):
         ninput_items = len(input_items[0])
         for bins in input_items[0]:
-
             p = np.around(bins).astype(int)
-#            p = np.fft.fftshift(p)
             for c in connections.copy():
                 try:
                     c.send(json.dumps({'s': p.tolist()}, separators=(',', ':')))
                 except Exception:
                     connections.remove(c)
-
         self.consume(0, ninput_items)
-
         return 0
 
 
@@ -93,7 +89,7 @@ class fft_receiver(gr.top_block):
 
         self.throttle = blocks.throttle(
             gr.sizeof_float*fft_size,
-            samp_rate,
+            framerate,
             True)
 
         self.fft_broadcast = fft_broadcast_sink(fft_size)
@@ -101,9 +97,10 @@ class fft_receiver(gr.top_block):
         self.connect((self.throttle, 0), (self.fft_broadcast, 0))
         self.connect((self.zmq_sub_source, 0), (self.throttle, 0))
 
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-s', '--sample-rate', type=float, default=200e6)
+    parser.add_argument('-s', '--sample-rate', type=float, default=20e6)
     parser.add_argument('-f', '--frequency', type=float, default=1600e6)
 #    parser.add_argument('-g', '--gain', type=float, default=40)
     parser.add_argument('-n', '--fft-size', type=int, default=4096)
