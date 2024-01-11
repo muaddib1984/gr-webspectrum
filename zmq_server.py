@@ -65,6 +65,8 @@ class fft_broadcast_sink(gr.sync_block):
     def work(self, input_items, output_items):
         ninput_items = len(input_items[0])
         for bins in input_items[0]:
+
+            print("length of input_items[0] (num vectors)",len(input_items[0]))
             p = np.around(bins).astype(int)
             for c in connections.copy():
                 try:

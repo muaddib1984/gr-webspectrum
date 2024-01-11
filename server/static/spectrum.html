@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Jeppe Ledet-Pedersen">
+        <title>gr-webspectrum</title>
+        <link rel="stylesheet" type="text/css" href="/static/spectrum.css" />
+
+        <script src="/static/colormap.js"></script>
+        <script src="/static/spectrum.js"></script>
+<script>
+'use strict';
+
+let STREAM_SOURCE = null;
+let SPECTRUM = null;
+
+function subscribeToStream() {
+    // close the previous stream source if it exists
+    if (STREAM_SOURCE != null) {
+	STREAM_SOURCE.close();
+    }
+
+    let url = new URL('stream', window.location.href);
+    // add arguments as required
+    // url.searchParams.set('FREQ', value_from_some_form)
+
+    STREAM_SOURCE = new EventSource(url)
+    STREAM_SOURCE.onmessage = function(event) {
+	// get data from the the stream
+	let parsed = JSON.parse(event.data);
+	SPECTRUM.addData(parsed);
+    };
+
+}
+
+// This could be easier in jquery, but we didn't bite that off
+function main() {
+    // Create spectrum object on canvas with ID "waterfall"
+    SPECTRUM = new Spectrum(
+	"waterfall", { spectrumPercent: 60 }
+    );
+
+    // Bind keypress handler
+    window.addEventListener("keydown", function(e) {
+	SPECTRUM.onKeypress(e);
+    });
+
+    // This could be a form action, if you provided values
+    subscribeToStream();
+}
+
+window.onload = main;
+</script>
+</head>
+
+    <body>
+        <canvas id="waterfall"></canvas>
+    </body>
+</html>
