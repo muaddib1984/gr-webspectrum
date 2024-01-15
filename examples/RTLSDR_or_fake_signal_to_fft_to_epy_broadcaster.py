@@ -50,7 +50,6 @@ class RTLSDR_or_fake_signal_to_fft_to_epy_broadcaster(gr.top_block):
         self.xmlrpc_server_0_thread = threading.Thread(target=self.xmlrpc_server_0.serve_forever)
         self.xmlrpc_server_0_thread.daemon = True
         self.xmlrpc_server_0_thread.start()
-        self.throttle = blocks.throttle(gr.sizeof_gr_complex*1, samp_rate,True)
         self.low_pass_filter_0 = filter.fir_filter_ccf(
             1,
             firdes.low_pass(
@@ -69,6 +68,7 @@ class RTLSDR_or_fake_signal_to_fft_to_epy_broadcaster(gr.top_block):
             average=False,
             shift=True)
         self.epy_broadcaster_block = epy_broadcaster_block.broadcaster(samp_rate=samp_rate, freq=frequency, gain=gain, fft_size=fft_size, redis_host="localhost", redis_port=6379, redis_stream="spectral")
+        self.blocks_throttle2_0 = blocks.throttle( gr.sizeof_gr_complex*1, samp_rate, True, 0 if "auto" == "auto" else max( int(float(0.1) * samp_rate) if "auto" == "time" else int(0.1), 1) )
         self.blocks_add_xx_0 = blocks.add_vcc(1)
         self.analog_sig_source_x_0_0 = analog.sig_source_c(samp_rate, analog.GR_COS_WAVE, 500e3, .007, 0, 0)
         self.analog_sig_source_x_0 = analog.sig_source_c(samp_rate, analog.GR_COS_WAVE, (-922e3), 0.0075, 0, 0)
@@ -83,10 +83,10 @@ class RTLSDR_or_fake_signal_to_fft_to_epy_broadcaster(gr.top_block):
         self.connect((self.analog_noise_source_x_0_0, 0), (self.blocks_add_xx_0, 3))
         self.connect((self.analog_sig_source_x_0, 0), (self.blocks_add_xx_0, 1))
         self.connect((self.analog_sig_source_x_0_0, 0), (self.blocks_add_xx_0, 2))
-        self.connect((self.blocks_add_xx_0, 0), (self.throttle, 0))
+        self.connect((self.blocks_add_xx_0, 0), (self.blocks_throttle2_0, 0))
+        self.connect((self.blocks_throttle2_0, 0), (self.logpwrfft_x_0, 0))
         self.connect((self.logpwrfft_x_0, 0), (self.epy_broadcaster_block, 0))
         self.connect((self.low_pass_filter_0, 0), (self.blocks_add_xx_0, 0))
-        self.connect((self.throttle, 0), (self.logpwrfft_x_0, 0))
 
 
     def get_fft_size(self):
@@ -117,7 +117,7 @@ class RTLSDR_or_fake_signal_to_fft_to_epy_broadcaster(gr.top_block):
         self.analog_sig_source_x_0_0.set_sampling_freq(self.samp_rate)
         self.logpwrfft_x_0.set_sample_rate(self.samp_rate)
         self.low_pass_filter_0.set_taps(firdes.low_pass(1, self.samp_rate, 300e3, 60e3, window.WIN_HAMMING, 6.76))
-        self.throttle.set_sample_rate(self.samp_rate)
+        self.blocks_throttle2_0.set_sample_rate(self.samp_rate)
 
 
 

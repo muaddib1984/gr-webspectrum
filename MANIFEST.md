@@ -1,16 +1,14 @@
-title: The WEBSPECTRUM OOT Module
-brief: Short description of gr-webspectrum
-tags: # Tags are arbitrary, but look at CGRAN what other authors are using
+title: The gr-webspectrum OOT Module
+brief: Vector Sink the Broadcasts fixed length vectors of FFT magnitudes to a Redis Web Backend
+tags:
   - sdr
 author:
-  - Author Name <authors@email.address>
+  - Paul Atreides <https://github.com/muaddib1984>
 copyright_owner:
-  - Copyright Owner 1
-license:
-gr_supported_version: # Put a comma separated list of supported GR versions here
-#repo: # Put the URL of the repository here, or leave blank for default
-#website: <module_website> # If you have a separate project website, put it here
-#icon: <icon_url> # Put a URL to a square image here that will be used as an icon on CGRAN
+  - none
+license: MIT
+gr_supported_version: 3.10.X
+repo: https://github.com/muaddib1984/gr-webspectrum
 ---
 A longer, multi-line description of gr-webspectrum.
 You may use some *basic* Markdown here.
