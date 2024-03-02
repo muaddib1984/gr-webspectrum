@@ -2,8 +2,10 @@ from starlette.config import Config
 
 # Any settings here can be overriden by a ".env" file in the directory from which the
 # server is started
-config = Config('.env')
-
+try:
+    config = Config(".env")
+except FileNotFoundError:
+    config = Config()
 class Settings:
     PROJECT_NAME: str = 'gr-webspectrum'
     PROJECT_VERSION: str = '0.1.0'
